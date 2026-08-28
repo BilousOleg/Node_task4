@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
       manufacturedYear: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        field: 'manufactured_year',
         validate: {
           isInt: true,
           min: 1970,
@@ -42,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       ramSize: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        field: 'ram_size',
         validate: {
           isInt: true,
           min: 1,
@@ -59,7 +57,6 @@ module.exports = (sequelize, DataTypes) => {
       screenDiagonal: {
         type: DataTypes.DECIMAL(4, 2),
         allowNull: false,
-        field: 'screen_diagonal',
         validate: {
           min: 1,
           max: 100,
@@ -69,7 +66,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-        field: 'has_nfc',
       },
     },
     {
@@ -81,6 +77,7 @@ module.exports = (sequelize, DataTypes) => {
           fields: ['brand', 'model'],
         },
       ],
+      underscored: true,
     }
   );
   return Phone;

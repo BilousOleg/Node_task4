@@ -1,46 +1,46 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Phones', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('phones', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       model: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       brand: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       manufactured_year: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       ram_size: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       cpu: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       screen_diagonal: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
       },
       has_nfc: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Phones');
-  }
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('phones');
+  },
 };
