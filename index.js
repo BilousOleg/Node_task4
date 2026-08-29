@@ -5,7 +5,7 @@ const { sequelize, Phone } = require('./models');
   try {
     // додавання нового телефону
     const newPhone = {
-      model: 'Galaxy S25',
+      model: 'Galaxy S26',
       brand: 'Samsung',
       manufacturedYear: 2025,
       ramSize: 12000, // mb
