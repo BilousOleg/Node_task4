@@ -169,7 +169,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Phones', {
+    await queryInterface.bulkDelete('phones', {
       model: [
         'iPhone 12',
         'Galaxy S20',

@@ -101,5 +101,7 @@ const { sequelize, Phone } = require('./models');
     console.log('Deleted phones:', deletedPhonesCount);
   } catch (err) {
     console.error(err);
+  } finally {
+    await sequelize.close();
   }
 })();
