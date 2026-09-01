@@ -1,0 +1,87 @@
+### 201
+
+POST http://localhost:5000/api/phones
+Content-Type: application/json
+
+{
+  "model": "Galaxy S27",
+  "brand": "Samsung",
+  "manufacturedYear": 2020,
+  "ramSize": 8000,
+  "cpu": "Exynos 990",
+  "screenDiagonal": 6.2,
+  "hasNfc": true
+}
+
+### 422
+
+POST http://localhost:5000/api/phones
+Content-Type: application/json
+
+{
+  "model": "Galaxy S27",
+  "brand": "Samsung",
+  "manufacturedYear": "abc",
+  "ramSize": "abc",
+  "cpu": "Exynos 990",
+  "screenDiagonal": 6.2
+}
+
+### 200
+
+GET http://localhost:5000/api/phones
+
+### 200
+
+GET http://localhost:5000/api/phones?page=2&results=10
+
+### 422
+
+GET http://localhost:5000/api/phones?page=a&results=abc
+
+### 200
+
+GET http://localhost:5000/api/phones/41
+
+### 404
+
+GET http://localhost:5000/api/phones/150
+
+### 200
+
+PATCH http://localhost:5000/api/phones/16
+Content-Type: application/json
+
+{
+  "cpu": "Exynos 990",
+  "hasNfc": true
+}
+
+### 404
+
+PATCH http://localhost:5000/api/phones/150
+Content-Type: application/json
+
+{
+  "cpu": "Exynos 990",
+  "hasNfc": true
+}
+
+### 422
+
+PATCH http://localhost:5000/api/phones/150
+Content-Type: application/json
+
+{
+  "ramSize": "abc",
+  "cpu": "Exynos 990",
+  "hasNfc": true
+}
+
+### 204
+
+DELETE http://localhost:5000/api/phones/41
+
+### 404
+
+DELETE http://localhost:5000/api/phones/150
