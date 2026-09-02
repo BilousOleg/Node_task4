@@ -31,7 +31,7 @@ const numberValidationSchema = fieldName =>
     .number()
     .typeError(`${fieldName} must be a number`)
     .min(1, `${fieldName} must be at least 1`)
-    .max(100, `${fieldName} must not exceed 100`);
+    .max(99.9, `${fieldName} must not exceed 99.9`);
 
 const booleanValidationSchema = fieldName =>
   yup.boolean().typeError(`${fieldName} must be a boolean`);
@@ -52,15 +52,21 @@ module.exports.CREATE_PHONE_VALIDATION_SCHEMA = yup.object({
   hasNfc: booleanValidationSchema('NFC').default(false),
 });
 
-module.exports.UPDATE_PHONE_VALIDATION_SCHEMA = yup.object({
-  model: textValidationSchema('Model'),
-  brand: textValidationSchema('Brand'),
-  manufacturedYear: yearValidationSchema('Manufactured year'),
-  ramSize: positiveIntegerValidationSchema('RAM size'),
-  cpu: textValidationSchema('CPU'),
-  screenDiagonal: numberValidationSchema('Screen diagonal'),
-  hasNfc: booleanValidationSchema('NFC'),
-});
+module.exports.UPDATE_PHONE_VALIDATION_SCHEMA = yup
+  .object({
+    model: textValidationSchema('Model'),
+    brand: textValidationSchema('Brand'),
+    manufacturedYear: yearValidationSchema('Manufactured year'),
+    ramSize: positiveIntegerValidationSchema('RAM size'),
+    cpu: textValidationSchema('CPU'),
+    screenDiagonal: numberValidationSchema('Screen diagonal'),
+    hasNfc: booleanValidationSchema('NFC'),
+  })
+  .test(
+    'not-empty',
+    'At least one field must be provided',
+    value => Object.keys(value).length > 0
+  );
 
 module.exports.PAGINATION_VALIDATION_SCHEMA = yup.object({
   page: positiveIntegerValidationSchema('Page', 1),
@@ -69,3 +75,9 @@ module.exports.PAGINATION_VALIDATION_SCHEMA = yup.object({
     'Results must not exceed 100'
   ),
 });
+
+module.exports.ID_VALIDATION_SCHEMA = yup
+  .number()
+  .typeError('Id must be a number')
+  .integer('Id must be an integer')
+  .min(1, 'Id must be greater than 0');

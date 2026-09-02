@@ -21,10 +21,10 @@ Content-Type: application/json
 {
   "model": "Galaxy S27",
   "brand": "Samsung",
-  "manufacturedYear": "abc",
-  "ramSize": "abc",
+  "manufacturedYear": 2000,
+  "ramSize": 12000,
   "cpu": "Exynos 990",
-  "screenDiagonal": 6.2
+  "screenDiagonal": 100
 }
 
 ### 200
@@ -46,6 +46,10 @@ GET http://localhost:5000/api/phones/41
 ### 404
 
 GET http://localhost:5000/api/phones/150
+
+### 422
+
+GET http://localhost:5000/api/phones/abc
 
 ### 200
 
@@ -72,8 +76,25 @@ Content-Type: application/json
 PATCH http://localhost:5000/api/phones/150
 Content-Type: application/json
 
+{}
+
+### 422
+
+PATCH http://localhost:5000/api/phones/150
+Content-Type: application/json
+
 {
   "ramSize": "abc",
+  "cpu": "Exynos 990",
+  "hasNfc": true
+}
+
+### 422
+
+PATCH http://localhost:5000/api/phones/abc
+Content-Type: application/json
+
+{
   "cpu": "Exynos 990",
   "hasNfc": true
 }
@@ -85,3 +106,7 @@ DELETE http://localhost:5000/api/phones/41
 ### 404
 
 DELETE http://localhost:5000/api/phones/150
+
+### 422
+
+DELETE http://localhost:5000/api/phones/abc

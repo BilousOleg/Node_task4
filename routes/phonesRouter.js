@@ -13,6 +13,9 @@ phonesRouter
   )
   .post(validation.validatePhoneOnCreate, phonesController.createPhone);
 
+// Навішування обробника id на весь маршрут, який має параметр id
+phonesRouter.use('/:id', validation.validateId);
+
 phonesRouter
   .route('/:id')
   .get(phonesController.getPhoneById)
