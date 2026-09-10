@@ -169,22 +169,24 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
+    const { Op } = Sequelize;
+
     await queryInterface.bulkDelete('phones', {
-      model: [
-        'iPhone 12',
-        'Galaxy S20',
-        'N8',
-        'Galaxy S',
-        'iPhone XS',
-        'Galaxy S10',
-        'iPhone 13',
-        'Galaxy S21',
-        'Pixel 6',
-        'iPhone 14',
-        'Galaxy S23',
-        'Pixel 9',
-        'Galaxy S25',
-        'iPhone 16',
+      [Op.or]: [
+        { brand: 'Apple', model: 'iPhone 12' },
+        { brand: 'Samsung', model: 'Galaxy S20' },
+        { brand: 'Nokia', model: 'N8' },
+        { brand: 'Samsung', model: 'Galaxy S' },
+        { brand: 'Apple', model: 'iPhone XS' },
+        { brand: 'Samsung', model: 'Galaxy S10' },
+        { brand: 'Apple', model: 'iPhone 13' },
+        { brand: 'Samsung', model: 'Galaxy S21' },
+        { brand: 'Google', model: 'Pixel 6' },
+        { brand: 'Apple', model: 'iPhone 14' },
+        { brand: 'Samsung', model: 'Galaxy S23' },
+        { brand: 'Google', model: 'Pixel 9' },
+        { brand: 'Samsung', model: 'Galaxy S25' },
+        { brand: 'Apple', model: 'iPhone 16' },
       ],
     });
   },

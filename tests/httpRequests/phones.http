@@ -110,3 +110,79 @@ DELETE http://localhost:5000/api/phones/150
 ### 422
 
 DELETE http://localhost:5000/api/phones/abc
+
+### 200
+
+GET http://localhost:5000/api/phones/60/preorders
+
+### 404
+
+GET http://localhost:5000/api/phones/1287/preorders
+
+### 422
+
+GET http://localhost:5000/api/phones/abc/preorders
+
+### 200
+
+GET http://localhost:5000/api/preorders
+
+### 200
+
+GET http://localhost:5000/api/preorders?page=2&results=2
+
+### 200
+
+GET http://localhost:5000/api/preorders?status=pending
+
+### 200
+
+GET http://localhost:5000/api/preorders?status=pending&results=1&page=2
+
+### 422
+
+GET http://localhost:5000/api/preorders?page=abc&results=2
+
+### 422
+
+GET http://localhost:5000/api/preorders?page=2&results=abc
+
+### 201
+
+POST http://localhost:5000/api/phones/60/preorders
+Content-Type: application/json
+
+{
+  "count": 10,
+  "customerTel": "+380123456789"
+}
+
+### 404
+
+POST http://localhost:5000/api/phones/3213/preorders
+Content-Type: application/json
+
+{
+  "count": 10,
+  "customerTel": "+380123456789"
+}
+
+### 422
+
+POST http://localhost:5000/api/phones/abc/preorders
+Content-Type: application/json
+
+{
+  "count": 10,
+  "customerTel": "+380123456789"
+}
+
+### 422
+
+POST http://localhost:5000/api/phones/60/preorders
+Content-Type: application/json
+
+{
+  "count": "abc",
+  "customerTel": "+380123456789"
+}

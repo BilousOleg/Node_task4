@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { phonesController } = require('../controllers');
 const { paginate, validation } = require('../middleware');
+const phonesPreordersRouter = require('./phonesPreordersRouter');
 
 const phonesRouter = new Router();
 
@@ -21,5 +22,7 @@ phonesRouter
   .get(phonesController.getPhoneById)
   .patch(validation.validatePhoneOnUpdate, phonesController.updatePhoneById)
   .delete(phonesController.deletePhoneById);
+
+phonesRouter.use('/:id/preorders', phonesPreordersRouter);
 
 module.exports = phonesRouter;

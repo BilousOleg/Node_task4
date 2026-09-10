@@ -1,4 +1,5 @@
 const yup = require('yup');
+const { STATUSES } = require('../constants');
 
 const textValidationSchema = fieldName =>
   yup
@@ -81,3 +82,26 @@ module.exports.ID_VALIDATION_SCHEMA = yup
   .typeError('Id must be a number')
   .integer('Id must be an integer')
   .min(1, 'Id must be greater than 0');
+
+const STATUS_VALIDATION_SCHEMA = yup
+  .string()
+  .oneOf(Object.values(STATUSES))
+  .optional();
+
+module.exports.STATUS_VALIDATION_SCHEMA = STATUS_VALIDATION_SCHEMA;
+
+module.exports.CREATE_PREORDER_VALIDATION_SCHEMA = yup.object({
+  status: STATUS_VALIDATION_SCHEMA,
+  count: yup
+    .number()
+    .integer()
+    .typeError('Count must be an integer')
+    .min(1)
+    .max(100)
+    .required(),
+  customerTel: yup
+    .string()
+    .typeError('Phone number must be a string')
+    .matches(/^\+[1-9]\d{7,14}$/, 'Invalid phone number')
+    .required(),
+});
