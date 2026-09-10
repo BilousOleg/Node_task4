@@ -4,7 +4,7 @@ POST http://localhost:5000/api/phones
 Content-Type: application/json
 
 {
-  "model": "Galaxy S27",
+  "model": "Galaxy S35",
   "brand": "Samsung",
   "manufacturedYear": 2020,
   "ramSize": 8000,
@@ -154,6 +154,17 @@ Content-Type: application/json
 
 {
   "count": 10,
+  "customerTel": "+380123456789"
+}
+
+### 201
+
+POST http://localhost:5000/api/phones/60/preorders
+Content-Type: application/json
+
+{
+  "count": 10,
+  "status": "confirmed",
   "customerTel": "+380123456789"
 }
 

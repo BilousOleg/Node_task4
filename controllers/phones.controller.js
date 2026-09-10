@@ -3,10 +3,13 @@ const createHttpError = require('http-errors');
 const { Phone } = require('../db/models');
 
 module.exports.createPhone = async (req, res, next) => {
-  const { body } = req;
+  const { body, file } = req;
 
   try {
-    const createdPhone = await Phone.create(body);
+    const createdPhone = await Phone.create({
+      ...body,
+      image: file?.filename,
+    });
 
     if (!createdPhone) {
       return next(createHttpError(400, 'Something went wrong'));
@@ -96,6 +99,38 @@ module.exports.deletePhoneById = async (req, res, next) => {
     }
 
     res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.updatePhoneImage = async (req, res, next) => {
+  const {
+    file,
+    params: { id },
+  } = req;
+
+  try {
+    if (!file) {
+      return next(createHttpError(422, 'Image is error'));
+    }
+
+    const [updatedPhoneCount, [updatedPhone]] = await Phone.update(
+      { image: file.filename },
+      {
+        raw: true,
+        where: { id },
+        returning: true,
+      }
+    );
+
+    if (!updatedPhoneCount) {
+      return next(createHttpError(404, 'Phone Not Found'));
+    }
+
+    const preparedPhone = _.omit(updatedPhone, ['createdAt', 'updatedAt']);
+
+    return res.status(200).send(preparedPhone);
   } catch (err) {
     next(err);
   }
