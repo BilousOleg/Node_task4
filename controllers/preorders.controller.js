@@ -1,7 +1,7 @@
 const createHttpError = require('http-errors');
 const _ = require('lodash');
 const { format } = require('date-fns');
-const { Preorder, Phone } = require('../models');
+const { Preorder, Phone } = require('../db/models');
 
 module.exports.getPreorders = async (req, res, next) => {
   const {

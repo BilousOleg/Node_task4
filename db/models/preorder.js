@@ -2,7 +2,7 @@
 
 const { format, addDays } = require('date-fns');
 const { Model } = require('sequelize');
-const { STATUSES } = require('../constants');
+const { STATUSES } = require('../../constants');
 
 module.exports = (sequelize, DataTypes) => {
   class Preorder extends Model {
