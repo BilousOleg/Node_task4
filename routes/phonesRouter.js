@@ -16,7 +16,6 @@ phonesRouter
   .post(
     upload.uploadPhoneImage,
     validation.validatePhoneOnCreate,
-    upload.processImage,
     phonesController.createPhone
   );
 
@@ -26,14 +25,12 @@ phonesRouter.use('/:id', validation.validateId);
 phonesRouter
   .route('/:id')
   .get(phonesController.getPhoneById)
-  .patch(validation.validatePhoneOnUpdate, phonesController.updatePhoneById)
+  .patch(
+    upload.uploadPhoneImage,
+    validation.validatePhoneOnUpdate,
+    phonesController.updatePhoneById
+  )
   .delete(phonesController.deletePhoneById);
-
-phonesRouter.patch(
-  '/:id/images',
-  upload.uploadPhoneImage,
-  phonesController.updatePhoneImage
-);
 
 phonesRouter.use('/:id/preorders', phonesPreordersRouter);
 

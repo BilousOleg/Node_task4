@@ -2,6 +2,7 @@ const {
   UniqueConstraintError,
   ValidationError,
   BaseError,
+  ForeignKeyConstraintError,
 } = require('sequelize');
 const { ValidationError: YupValidationError } = require('yup');
 const multer = require('multer');
@@ -27,7 +28,21 @@ module.exports.multerErrorHandler = (err, req, res, next) => {
 
 module.exports.dbErrorHandler = (err, req, res, next) => {
   if (err instanceof UniqueConstraintError) {
-    return res.status(422).send([{ status: 422, title: err.message }]);
+    return res.status(422).send([
+      {
+        status: 422,
+        title: err.message,
+      },
+    ]);
+  }
+
+  if (err.parent?.code === '23001') {
+    return res.status(409).send([
+      {
+        status: 409,
+        title: 'Cannot delete the record because it has related records.',
+      },
+    ]);
   }
 
   if (err instanceof ValidationError) {
@@ -40,7 +55,12 @@ module.exports.dbErrorHandler = (err, req, res, next) => {
   }
 
   if (err instanceof BaseError) {
-    return res.status(500).send([{ status: 500, title: 'Database Error' }]);
+    return res.status(500).send([
+      {
+        status: 500,
+        title: 'Database Error',
+      },
+    ]);
   }
 
   next(err);

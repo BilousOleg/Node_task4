@@ -1,14 +1,20 @@
+const fs = require('fs/promises');
+const path = require('path');
 const _ = require('lodash');
 const createHttpError = require('http-errors');
 const { Phone } = require('../db/models');
+const { savePhoneImage } = require('../utils/imageProcessing');
+const { STATIC_PATH } = require('../constants');
 
 module.exports.createPhone = async (req, res, next) => {
   const { body, file } = req;
 
   try {
+    const image = file ? await savePhoneImage(file) : undefined;
+
     const createdPhone = await Phone.create({
       ...body,
-      image: file?.filename,
+      image,
     });
 
     if (!createdPhone) {
@@ -66,19 +72,31 @@ module.exports.getPhoneById = async (req, res, next) => {
 module.exports.updatePhoneById = async (req, res, next) => {
   const {
     body,
+    file,
     params: { id },
   } = req;
 
   try {
-    const [updatedPhonesCount, [updatedPhone]] = await Phone.update(body, {
+    const phone = await Phone.findByPk(id);
+
+    if (!phone) {
+      return next(createHttpError(404, 'Phone Not Found'));
+    }
+
+    const updateData = {
+      ...body,
+    };
+
+    if (file) {
+      // Зараз зображення додається, навіть якщо в бд буде помилка (обмеження, тощо), але поки не знаю, що з цим робити
+      updateData.image = await savePhoneImage(file, phone.image);
+    }
+
+    const [, [updatedPhone]] = await Phone.update(updateData, {
       raw: true,
       where: { id },
       returning: true,
     });
-
-    if (!updatedPhonesCount) {
-      return next(createHttpError(404, 'Phone Not Found'));
-    }
 
     const preparedPhone = _.omit(updatedPhone, ['createdAt', 'updatedAt']);
 
@@ -92,45 +110,20 @@ module.exports.deletePhoneById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const deletedPhonesCount = await Phone.destroy({ where: { id } });
+    const phone = await Phone.findByPk(id);
 
-    if (!deletedPhonesCount) {
+    if (!phone) {
       return next(createHttpError(404, 'Phone Not Found'));
+    }
+
+    await Phone.destroy({ where: { id } });
+
+    if (phone.image) {
+      // Тут так само - якщо видалення з помилкою в базі, то зображення не видалиться
+      await fs.unlink(path.join(STATIC_PATH, 'images', phone.image));
     }
 
     res.status(204).send();
-  } catch (err) {
-    next(err);
-  }
-};
-
-module.exports.updatePhoneImage = async (req, res, next) => {
-  const {
-    file,
-    params: { id },
-  } = req;
-
-  try {
-    if (!file) {
-      return next(createHttpError(422, 'Image is error'));
-    }
-
-    const [updatedPhoneCount, [updatedPhone]] = await Phone.update(
-      { image: file.filename },
-      {
-        raw: true,
-        where: { id },
-        returning: true,
-      }
-    );
-
-    if (!updatedPhoneCount) {
-      return next(createHttpError(404, 'Phone Not Found'));
-    }
-
-    const preparedPhone = _.omit(updatedPhone, ['createdAt', 'updatedAt']);
-
-    return res.status(200).send(preparedPhone);
   } catch (err) {
     next(err);
   }

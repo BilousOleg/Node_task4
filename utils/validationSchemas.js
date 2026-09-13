@@ -53,21 +53,15 @@ module.exports.CREATE_PHONE_VALIDATION_SCHEMA = yup.object({
   hasNfc: booleanValidationSchema('NFC').default(false),
 });
 
-module.exports.UPDATE_PHONE_VALIDATION_SCHEMA = yup
-  .object({
-    model: textValidationSchema('Model'),
-    brand: textValidationSchema('Brand'),
-    manufacturedYear: yearValidationSchema('Manufactured year'),
-    ramSize: positiveIntegerValidationSchema('RAM size'),
-    cpu: textValidationSchema('CPU'),
-    screenDiagonal: numberValidationSchema('Screen diagonal'),
-    hasNfc: booleanValidationSchema('NFC'),
-  })
-  .test(
-    'not-empty',
-    'At least one field must be provided',
-    value => Object.keys(value).length > 0
-  );
+module.exports.UPDATE_PHONE_VALIDATION_SCHEMA = yup.object({
+  model: textValidationSchema('Model'),
+  brand: textValidationSchema('Brand'),
+  manufacturedYear: yearValidationSchema('Manufactured year'),
+  ramSize: positiveIntegerValidationSchema('RAM size'),
+  cpu: textValidationSchema('CPU'),
+  screenDiagonal: numberValidationSchema('Screen diagonal'),
+  hasNfc: booleanValidationSchema('NFC'),
+});
 
 module.exports.PAGINATION_VALIDATION_SCHEMA = yup.object({
   page: positiveIntegerValidationSchema('Page', 1),

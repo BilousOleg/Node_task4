@@ -34,9 +34,16 @@ module.exports.validatePagination = async (req, res, next) => {
 };
 
 module.exports.validatePhoneOnUpdate = async (req, res, next) => {
-  const { body } = req;
+  const { body, file } = req;
 
   try {
+    const hasBody = Object.keys(body).length > 0;
+    const hasFile = Boolean(file);
+
+    if (!hasBody && !hasFile) {
+      return next(createHttpError(422, 'At least one field must be provided'));
+    }
+
     req.body = await UPDATE_PHONE_VALIDATION_SCHEMA.validate(body, {
       abortEarly: false,
     });
