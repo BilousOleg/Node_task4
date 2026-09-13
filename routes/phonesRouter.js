@@ -16,6 +16,7 @@ phonesRouter
   .post(
     upload.uploadPhoneImage,
     validation.validatePhoneOnCreate,
+    upload.processImage,
     phonesController.createPhone
   );
 

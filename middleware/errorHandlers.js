@@ -4,6 +4,8 @@ const {
   BaseError,
 } = require('sequelize');
 const { ValidationError: YupValidationError } = require('yup');
+const multer = require('multer');
+const createHttpError = require('http-errors');
 
 module.exports.validationErrorHandler = (err, req, res, next) => {
   if (err instanceof YupValidationError) {
@@ -15,14 +17,17 @@ module.exports.validationErrorHandler = (err, req, res, next) => {
   next(err);
 };
 
+module.exports.multerErrorHandler = (err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return next(createHttpError(500, err.message));
+  }
+
+  next(err);
+};
+
 module.exports.dbErrorHandler = (err, req, res, next) => {
   if (err instanceof UniqueConstraintError) {
-    return res.status(422).send([
-      {
-        status: 422,
-        title: err.message,
-      },
-    ]);
+    return res.status(422).send([{ status: 422, title: err.message }]);
   }
 
   if (err instanceof ValidationError) {
@@ -35,18 +40,13 @@ module.exports.dbErrorHandler = (err, req, res, next) => {
   }
 
   if (err instanceof BaseError) {
-    return res.status(500).send([
-      {
-        status: 500,
-        title: 'Database Error',
-      },
-    ]);
+    return res.status(500).send([{ status: 500, title: 'Database Error' }]);
   }
 
   next(err);
 };
 
-module.exports.errorHandler = (err, req, res, next) => {
+module.exports.errorHandler = async (err, req, res, next) => {
   if (res.headersSent) {
     return;
   }
@@ -54,10 +54,5 @@ module.exports.errorHandler = (err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message || 'Server Error';
 
-  res.status(status).send([
-    {
-      status,
-      title: message,
-    },
-  ]);
+  res.status(status).send([{ status, title: message }]);
 };

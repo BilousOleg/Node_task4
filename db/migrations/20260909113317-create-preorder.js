@@ -1,6 +1,6 @@
 'use strict';
 
-const { STATUSES } = require('../constants');
+const { STATUSES } = require('../../constants');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

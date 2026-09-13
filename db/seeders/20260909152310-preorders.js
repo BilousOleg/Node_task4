@@ -2,7 +2,7 @@
 
 const {
   STATUSES: { PENDING, CONFIRMED },
-} = require('../constants');
+} = require('../../constants');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
