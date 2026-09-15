@@ -1,3 +1,4 @@
+const createHttpError = require('http-errors');
 const {
   CREATE_PHONE_VALIDATION_SCHEMA,
   PAGINATION_VALIDATION_SCHEMA,
