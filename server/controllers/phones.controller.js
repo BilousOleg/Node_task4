@@ -4,7 +4,7 @@ const { Phone } = require('../db/models');
 const {
   savePhoneImage,
   removePhoneImage,
-} = require('../utils/imageProcessing');
+} = require('../../utils/imageProcessing');
 
 module.exports.createPhone = async (req, res, next) => {
   const { body, file } = req;

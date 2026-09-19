@@ -2,7 +2,6 @@ const {
   UniqueConstraintError,
   ValidationError,
   BaseError,
-  ForeignKeyConstraintError,
 } = require('sequelize');
 const { ValidationError: YupValidationError } = require('yup');
 const multer = require('multer');

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = require('./routes');
 const { errorHandlers } = require('./middleware');
-const { STATIC_PATH } = require('./constants');
+const { STATIC_PATH } = require('../constants');
 
 const app = express();
 

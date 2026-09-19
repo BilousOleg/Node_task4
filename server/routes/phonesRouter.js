@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const { phonesController } = require('../controllers');
-const { paginate, validation } = require('../middleware');
+const { paginate, validation, upload } = require('../middleware');
 const phonesPreordersRouter = require('./phonesPreordersRouter');
-const { upload } = require('../middleware');
 
 const phonesRouter = new Router();
 
