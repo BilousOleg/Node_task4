@@ -13,8 +13,6 @@ function PhonesPage () {
     dispatch(getPhonesThunk());
   }, []);
 
-  console.log(phones);
-
   return (
     <section className={styles.phones}>
       <PhonesList phones={phones} />

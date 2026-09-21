@@ -23,10 +23,23 @@ export const getPhonesThunk = createAsyncThunk(
   }
 );
 
+export const deletePhoneThunk = createAsyncThunk(
+  `${PHONES_SLICE_NAME}/delete`,
+  async (payload, { rejectWithValue }) => {
+    try {
+      await API.deletePhone(payload);
+      return payload;
+    } catch (err) {
+      return rejectWithValue({ errors: err.response.data });
+    }
+  }
+);
+
 const phonesSlice = createSlice({
   initialState,
   name: PHONES_SLICE_NAME,
   extraReducers: builder => {
+    // get
     builder.addCase(getPhonesThunk.pending, state => {
       state.isFetching = true;
       state.error = null;
@@ -36,6 +49,19 @@ const phonesSlice = createSlice({
       state.isFetching = false;
     });
     builder.addCase(getPhonesThunk.rejected, (state, { payload }) => {
+      state.error = payload;
+      state.isFetching = false;
+    });
+    // delete
+    builder.addCase(deletePhoneThunk.pending, state => {
+      state.isFetching = true;
+      state.error = null;
+    });
+    builder.addCase(deletePhoneThunk.fulfilled, (state, { payload }) => {
+      state.isFetching = false;
+      state.phones = state.phones.filter(p => p.id !== payload);
+    });
+    builder.addCase(deletePhoneThunk.rejected, (state, { payload }) => {
       state.error = payload;
       state.isFetching = false;
     });

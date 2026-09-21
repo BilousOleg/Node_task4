@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { deletePhoneThunk } from '../../../store/slices/phonesSlice';
 import defaultImage from '../defaultImage.jpg';
 import styles from './PhonesListItem.module.sass';
 
@@ -13,6 +15,8 @@ function PhonesListItem ({
   hasNfc,
   image,
 }) {
+  const dispatch = useDispatch();
+
   return (
     <li className={styles.item}>
       {/* TODO individual phone page */}
@@ -52,7 +56,11 @@ function PhonesListItem ({
             <span>Edit</span>
           </button>
 
-          <button type='button' className={styles.deleteButton}>
+          <button
+            type='button'
+            className={styles.deleteButton}
+            onClick={() => dispatch(deletePhoneThunk(id))}
+          >
             <DeleteIcon />
             <span>Delete</span>
           </button>
