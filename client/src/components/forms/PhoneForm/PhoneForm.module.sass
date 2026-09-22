@@ -1,0 +1,116 @@
+@use '../../../assets/_colors' as c
+
+.form
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 1.65rem 1.5rem
+  max-width: 800px
+  margin: 0 auto
+  padding: 2rem
+  background-color: c.$bg-color
+  border: 1px solid c.$border-color
+  border-radius: 0.75rem
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06)
+
+  .label
+    position: relative
+    display: flex
+    flex-direction: column
+    gap: 0.4rem
+
+    span
+      font-size: 0.9rem
+      font-weight: 600
+
+.input
+  box-sizing: border-box
+  width: 100%
+  padding: 0.65rem 0.75rem
+  font: inherit
+  border: 1px solid #cccccc
+  border-radius: 0.35rem
+  outline: none
+  transition: border-color 0.15s ease, box-shadow 0.15s ease
+
+  &:focus
+    border-color: c.$additional-color-muted
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06)
+
+.valid
+  border-color: c.$color-success
+
+.invalid
+  border-color: c.$color-error
+
+.error
+  position: absolute
+  bottom: -1.2rem
+  font-size: 0.8rem
+  font-weight: 400
+  color: c.$color-error
+
+.checkbox
+  grid-column: 1 / -1
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 0.5rem
+
+  input
+    width: auto
+
+  span
+    font-size: 0.9rem
+    font-weight: 600
+
+.fileField
+  grid-column: 1 / -1
+  display: flex
+  flex-direction: column
+  gap: 0.4rem
+  margin-top: -0.75rem
+
+  span
+    font-size: 0.9rem
+    font-weight: 600
+
+  input
+    box-sizing: border-box
+    width: 100%
+    padding: 0.5rem
+    font: inherit
+    border: 1px dashed c.$additional-color-dark
+    border-radius: 0.35rem
+    background-color: c.$additional-color-light
+    cursor: pointer
+
+    &:hover
+      border-color: c.$additional-color-muted
+      background-color: c.$main-color
+
+.submitBtn
+  grid-column: 1 / -1
+  justify-self: center
+  display: flex
+  align-items: center
+  gap: 0.25rem
+  padding: 0.5rem 1.5rem
+  font: inherit
+  font-weight: 600
+  text-transform: uppercase
+  border: none
+  border-radius: 0.25rem
+  background-color: c.$color-success
+  transition: background-color 0.15s ease
+
+  &:hover
+    background-color: c.$color-success-hover
+    cursor: pointer
+
+  &:active
+    background-color: c.$color-success-active
+
+@media screen and (max-width: 600px)
+  .form
+    grid-template-columns: 1fr
+    padding: 1.25rem

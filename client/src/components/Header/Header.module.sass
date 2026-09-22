@@ -1,4 +1,5 @@
-@use '../../assets/_vars.module' as c
+@use '../../assets/_vars' as v
+@use '../../assets/_colors' as c
   
 .header
   position: sticky
@@ -6,5 +7,12 @@
   display: flex
   justify-content: space-between
   align-items: center
-  padding: 1rem c.$main-padding
-  background: linear-gradient(0deg, #f3f3f3 0%, #b9b9b9 100%)
+  gap: 1rem
+  padding: 1rem v.$main-padding
+  background: linear-gradient(0deg, c.$additional-color-light 0%, c.$additional-color-dark 100%)
+
+  @media screen and (max-width: 700px)
+    padding: 1rem calc(v.$main-padding / 2)
+
+  @media screen and (max-width: 450px)
+    padding: 1rem calc(v.$main-padding / 4)

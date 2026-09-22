@@ -51,13 +51,12 @@ function PhonesListItem ({
           </div>
         </Link>
         <div className={styles.actions}>
-          <button type='button' className={styles.editButton}>
+          <Link to={`/phones/update/${id}`} className={styles.editButton}>
             <EditIcon />
             <span>Edit</span>
-          </button>
+          </Link>
 
           <button
-            type='button'
             className={styles.deleteButton}
             onClick={() => dispatch(deletePhoneThunk(id))}
           >

@@ -1,6 +1,20 @@
+@use '../../assets/_colors' as c
+
 .navList
   display: flex
   justify-content: space-between
   gap: 1.5rem
-  li
-    font-size: 1.1rem
+
+.navLink
+  padding: 0.4rem 1rem
+  border-radius: 0.75rem
+  font-size: 1.1rem
+
+  &:hover
+    background-color: c.$border-color
+
+  &:active
+    background-color: c.$additional-color-dark
+
+  &.active
+    background-color: c.$bg-color

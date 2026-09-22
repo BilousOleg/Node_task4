@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 import styles from './Navigation.module.sass';
 
 function Navigation () {
@@ -6,10 +7,28 @@ function Navigation () {
     <nav>
       <ul className={styles.navList}>
         <li>
-          <NavLink to='/'>Home</NavLink>
+          <NavLink
+            to='/'
+            className={({ isActive }) =>
+              classNames(styles.navLink, {
+                [styles.active]: isActive,
+              })
+            }
+          >
+            Home
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/phones'>Phones</NavLink>
+          <NavLink
+            to='/phones'
+            className={({ isActive }) =>
+              classNames(styles.navLink, {
+                [styles.active]: isActive,
+              })
+            }
+          >
+            Phones
+          </NavLink>
         </li>
         {/* Preorders */}
       </ul>

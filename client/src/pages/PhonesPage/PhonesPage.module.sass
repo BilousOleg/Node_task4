@@ -1,1 +1,27 @@
-.phones
+@use '../../assets/_colors' as c
+
+.headingGroup
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+  h1
+    font-size: 1.75rem
+
+  .addPhone
+    display: flex
+    align-items: center
+    gap: 0.25rem
+    padding: 0.35rem 1.5rem
+    text-transform: uppercase
+    border: none
+    border-radius: 0.25rem
+    background-color: c.$color-success
+    transition: background-color 0.15s ease
+
+    &:hover
+      background-color: c.$color-success-hover
+      cursor: pointer
+
+    &:active
+      background-color: c.$color-success-active
