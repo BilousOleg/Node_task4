@@ -35,10 +35,10 @@ module.exports.createPhone = async (req, res, next) => {
 };
 
 module.exports.getPhones = async (req, res, next) => {
-  const { limit, offset } = req.pagination;
+  const { page, limit, offset } = req.pagination;
 
   try {
-    const foundPhones = await Phone.findAll({
+    const { rows: foundPhones, count } = await Phone.findAndCountAll({
       raw: true,
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       limit,
@@ -46,7 +46,15 @@ module.exports.getPhones = async (req, res, next) => {
       order: ['id'],
     });
 
-    res.status(200).send({ data: foundPhones });
+    res.status(200).send({
+      data: foundPhones,
+      pagination: {
+        page,
+        results: limit,
+        total: count,
+        totalPages: Math.ceil(count / limit),
+      },
+    });
   } catch (err) {
     next(err);
   }
