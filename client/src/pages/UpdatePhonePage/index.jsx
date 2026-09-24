@@ -8,6 +8,7 @@ import {
   getPhoneByIdThunk,
   updatePhoneThunk,
 } from '../../store/slices/phonesSlice';
+import { showNotification } from '../../store/slices/notificationSlice';
 
 function UpdatePhonePage () {
   const { id } = useParams();
@@ -45,10 +46,27 @@ function UpdatePhonePage () {
     image: null,
   };
 
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     const formData = createFormData(values);
+    try {
+      await dispatch(
+        updatePhoneThunk({ id: phone.id, data: formData })
+      ).unwrap();
 
-    dispatch(updatePhoneThunk({ id: phone.id, data: formData }));
+      dispatch(
+        showNotification({
+          message: 'Phone created successfully',
+          type: 'success',
+        })
+      );
+    } catch (err) {
+      dispatch(
+        showNotification({
+          message: err.errors[0].title,
+          type: 'error',
+        })
+      );
+    }
   };
 
   return (

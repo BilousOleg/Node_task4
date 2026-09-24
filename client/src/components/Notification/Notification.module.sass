@@ -1,0 +1,45 @@
+@use '../../assets/_colors' as c
+
+.notification
+  position: fixed
+  left: 50%
+  top: 0 /* Меняем начальную точку на самый верх экрана */
+  z-index: 1000
+  display: flex
+  justify-content: space-between
+  align-items: center
+  gap: 1rem
+  min-width: 18rem
+  max-width: 30rem
+  padding: 0.9375rem 1.25rem
+  font-size: 1rem
+  border-radius: 0.5rem
+  color: c.$bg-color
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 15%)
+  transform: translate(-50%, -100%) 
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+
+  &.isActive
+    transform: translate(-50%, 5.25rem)
+
+  &.success 
+    background-color: c.$color-success-active
+
+  &.error
+    background-color: c.$color-error-active
+
+  .closeBtn
+    font-size: 1.1rem
+    border: 1px solid c.$bg-color
+    border-radius: 0.5rem
+    background: transparent
+    color: c.$bg-color
+    cursor: pointer
+
+    &:hover
+      border-color: c.$border-color
+      color: c.$border-color
+
+    &:active
+      border-color: c.$additional-color-dark
+      color: c.$additional-color-dark
