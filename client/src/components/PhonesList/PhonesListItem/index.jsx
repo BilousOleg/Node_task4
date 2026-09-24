@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deletePhoneThunk } from '../../../store/slices/phonesSlice';
-import { showNotification } from '../../../store/slices/notificationSlice';
 import defaultImage from '../defaultImage.jpg';
 import styles from './PhonesListItem.module.sass';
 
@@ -15,29 +12,8 @@ function PhonesListItem ({
   ramSize,
   hasNfc,
   image,
+  onDelete,
 }) {
-  const dispatch = useDispatch();
-
-  const handleDelete = async () => {
-    try {
-      await dispatch(deletePhoneThunk(id)).unwrap();
-
-      dispatch(
-        showNotification({
-          message: 'Phone deleted successfully',
-          type: 'success',
-        })
-      );
-    } catch (err) {
-      dispatch(
-        showNotification({
-          message: err.errors[0].title,
-          type: 'error',
-        })
-      );
-    }
-  };
-
   return (
     <li className={styles.item}>
       {/* TODO individual phone page */}
@@ -77,7 +53,12 @@ function PhonesListItem ({
             <span>Edit</span>
           </Link>
 
-          <button className={styles.deleteButton} onClick={handleDelete}>
+          <button
+            className={styles.deleteButton}
+            onClick={() => {
+              onDelete(id);
+            }}
+          >
             <DeleteIcon />
             <span>Delete</span>
           </button>

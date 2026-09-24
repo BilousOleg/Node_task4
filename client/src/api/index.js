@@ -4,7 +4,13 @@ const axiosInstance = axios.create({ baseURL: 'http://localhost:5000/api' });
 
 export const createPhone = data => axiosInstance.post('/phones', data);
 
-export const getPhones = () => axiosInstance.get('/phones');
+export const getPhones = (page, results) =>
+  axiosInstance.get('/phones', {
+    params: {
+      page,
+      results,
+    },
+  });
 
 export const getPhoneById = id => axiosInstance.get(`/phones/${id}`);
 

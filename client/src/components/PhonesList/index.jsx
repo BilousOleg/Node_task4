@@ -1,7 +1,7 @@
 import PhonesListItem from './PhonesListItem';
 import styles from './PhonesList.module.sass';
 
-function PhonesList ({ phones }) {
+function PhonesList ({ phones, onDelete }) {
   return (
     <ul className={styles.phonesList}>
       {phones.map(p => (
@@ -14,6 +14,7 @@ function PhonesList ({ phones }) {
           ramSize={p.ramSize}
           hasNfc={p.hasNfc}
           image={p.image}
+          onDelete={onDelete}
         />
       ))}
     </ul>
