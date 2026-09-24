@@ -30,7 +30,7 @@ module.exports.dbErrorHandler = (err, req, res, next) => {
     return res.status(422).send([
       {
         status: 422,
-        title: err.message,
+        title: 'A phone with this values already exists.',
       },
     ]);
   }
